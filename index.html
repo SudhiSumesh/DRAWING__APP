@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painter</title>
+    <style>
+
+     .cotainer{
+        padding: 0%;
+        margin: 0%;
+     }
+        .canvas{
+            border: solid 5px black ;
+            margin-left: 50px;
+           
+        }
+    .label{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+       </style>
+</head>
+<body>
+    <h1 style=" color: darkblue; text-align: center;">Drow Your Dream</h1>
+<br>
+    <div class="container" id="cd">
+       <label for="choose color"class="label"style="margin-left: 50px;font-size:30px;color:darkblue;">pick color:</label>
+        <input type="color" class="color" id="color" style="margin-left: 0px;height:35px;width:60px;">
+        <input type="number" class="num" id="brush" placeholder="size" style="margin-left: 950px;height:30px;width:60px;">
+        <input type="button" id="clr" value="Erase"style="margin-left: 50px;height:35px;width:60px;color:red;">
+        
+        <br><br> 
+        <canvas class="canvas"id="canvas" ></canvas>
+       
+     <script>
+        
+ 
+ const canvas=document.getElementById("canvas")
+const ctxt =canvas.getContext("2d")
+
+ const d=canvas.width=window.innerWidth-100
+const f=canvas.height=window.innerHeight-300
+ctxt.fillStyle="white"
+ctxt.fillRect(0,0,d,f)
+ctxt.fillStyle="black"
+let brushColor="black"
+let brushSize=3;
+const color=document.getElementById("color").addEventListener('change',function(){
+    brushColor=this.value
+})
+const cntrl=document.getElementById("brush").addEventListener("change",function(){
+    brushSize=this.value
+    
+})
+
+let painting=false
+//
+function paintingStart(e){
+    painting=true;
+   draw(e)
+}
+function paintingStop(e){
+    painting=false
+    ctxt.beginPath();
+}
+
+function draw(e){
+    if(painting==false) return;
+    const rect = canvas.getBoundingClientRect();
+       
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+ ctxt.lineWidth =brushSize;
+ ctxt.lineCap="round"
+ ctxt.lineTo(x,y);
+ ctxt.strokeStyle=brushColor;
+ ctxt.stroke();
+    
+    
+
+
+}
+function clearCanvas(){
+    
+    ctxt.clearRect(0,0,canvas.width,canvas.height)
+}
+//
+canvas.addEventListener("mousedown",paintingStart);
+canvas.addEventListener("mouseup",paintingStop);
+canvas.addEventListener("mousemove",draw);
+clr=document.getElementById('clr')
+clr.addEventListener("click", clearCanvas);
+
+     </script>
+</body>
+</html>

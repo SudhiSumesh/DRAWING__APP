@@ -1,55 +1,57 @@
+const canvas = document.getElementById("canvas");
+const ctxt = canvas.getContext("2d");
+const d = (canvas.width = window.innerWidth - 100);
+const f = (canvas.height = window.innerHeight - 300);
+ctxt.fillStyle = "white";
+ctxt.fillRect(0, 0, d, f);
+ctxt.fillStyle = "black";
+let brushColor = "black";
+let brushSize = 3;
 
- 
- const canvas=document.getElementById("canvas")
-const ctxt =canvas.getContext("2d")
-ctxt.fillStyle="white"
-ctxt.fillRect(0,0,500,500)
-ctxt.fillStyle="black"
-let brushColor="black"
-let brushSize=3;
-const color=document.getElementById("color").addEventListener("change",()=>{
-    brushColor=this.value
-})
-const cntrl=document.getElementById("brush").addEventListener("change",()=>{
-    brushSize=this .value
-})
-let painting=false
+const color = document
+  .getElementById("color")
+  .addEventListener("change", function () {
+    brushColor = this.value;
+  });
+
+const cntrl = document
+  .getElementById("brush")
+  .addEventListener("change", function () {
+    brushSize = this.value;
+  });
+
+let painting = false;
+
+function paintingStart(e) {
+  painting = true;
+  draw(e);
+}
+
+function paintingStop(e) {
+  painting = false;
+  ctxt.beginPath();
+}
+
+function draw(e) {
+  if (painting == false) return;
+  const rect = canvas.getBoundingClientRect();
+
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+
+  ctxt.lineWidth = brushSize;
+  ctxt.lineCap = "round";
+  ctxt.lineTo(x, y);
+  ctxt.strokeStyle = brushColor;
+  ctxt.stroke();
+}
+function clearCanvas() {
+  ctxt.clearRect(0, 0, canvas.width, canvas.height);
+}
 //
-function paintingStart(e){
-    painting=true
-}
-function paintingStop(e){
-    painting=false
-}
+canvas.addEventListener("mousedown", paintingStart);
+canvas.addEventListener("mouseup", paintingStop);
+canvas.addEventListener("mousemove", draw);
+clr = document.getElementById("clr");
+clr.addEventListener("click", clearCanvas);
 
-function drow(event){
-    if(painting==false) return
-    let x=event.clientX;
-    let y=event.clientY;
- ctxt.lineWidth =brushSize;
- ctxt.lineCap="round"
- ctxt.lineTo(x,y)
- ctxt.strokeStyle=brushColor;
- ctxt.stroke();
-    
-
-
-
-}
-//
-canvas.addEventListener("mousedown",()=>{
-   paintingStart('mousedown')
-
-
-
-})
-canvas.addEventListener("mouseup",()=>{
-    
-    paintingStop('mouseup')
-
-})
-canvas.addEventListener("mousemove",()=>{
-    
-    
-
-})

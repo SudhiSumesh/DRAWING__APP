@@ -1,0 +1,11 @@
+.cotainer {
+  padding: 0%;
+  margin: 0%;
+}
+.canvas {
+  border: solid 5px black;
+  margin-left: 50px;
+}
+.label {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
